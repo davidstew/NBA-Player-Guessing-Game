@@ -5,6 +5,33 @@
     <title>Title</title>
 </head>
 <body>
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <form id="playerForm" action="/submitPlayer" method="post">
+                <div class="form-group">
+                    <label for="playerDropdown">Select Player:</label>
+                    <select id="playerDropdown" class="form-control" name="selectedPlayerId">
+                        <!-- Dropdown options will be populated dynamically -->
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Player</button>
+            </form>
+        </div>
+    </div>
+</div>
 
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<!-- Axios CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Your JavaScript file -->
+<script src="test.js"></script>
+</body>
 </body>
 </html>
