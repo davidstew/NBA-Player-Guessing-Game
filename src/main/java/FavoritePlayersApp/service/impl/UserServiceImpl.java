@@ -8,6 +8,8 @@ import FavoritePlayersApp.mapper.GameMapper;
 import FavoritePlayersApp.mapper.UserMapper;
 import FavoritePlayersApp.repository.UserRepository;
 import FavoritePlayersApp.service.UserService;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
+    private final EntityManager entityManager;
+
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, EntityManager entityManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -48,9 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto joinGame(User user, GameDto gameDto) {
-
-        Game game = GameMapper.mapToGame(gameDto);
+    public UserDto joinGame(User user, Game game) {
 
         user.getGamesJoined().add(game);
 

@@ -3,12 +3,12 @@ package FavoritePlayersApp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @ToString
 @Table(name = "games")
@@ -16,19 +16,18 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    private int id;
 
-    int numberOfPlayersAllowed;
+    private int numberOfPlayersAllowed;
 
-    int attemptsAllowed;
+    private int attemptsAllowed;
 
-    String uniqueId;
+    private String uniqueId;
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
 
     @ManyToMany(mappedBy = "gamesJoined")
-    private List<User> playersJoined;
-
+    private List<User> playersJoined = new ArrayList<>();
 }

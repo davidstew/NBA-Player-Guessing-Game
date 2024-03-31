@@ -8,6 +8,7 @@ import FavoritePlayersApp.mapper.GameMapper;
 import FavoritePlayersApp.mapper.UserMapper;
 import FavoritePlayersApp.service.GameService;
 import FavoritePlayersApp.service.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,12 +31,12 @@ public class GameController {
         this.userService = userService;
     }
 
-    @GetMapping("select-player")
+    @GetMapping("/select-player")
     public String selectPlayer() {
         return "/select-player";
     }
 
-    @GetMapping("game-decision")
+    @GetMapping("/game-decision")
     public String gameDecision() {
         return "/game-decision";
     }
@@ -47,9 +48,9 @@ public class GameController {
 
 
     @PostMapping("/submitGame")
+    @Transactional
     public String submitGame(@ModelAttribute("game") GameDto gameDto, Model model) {
 
-        System.out.println("@@@@@@@@@@@@@@@@@ 1");
         User user = userService.findUserByEmail(Utilities.getCurrentUser());
 
         gameDto.setUniqueId(Utilities.generateRandomID());
@@ -58,10 +59,14 @@ public class GameController {
 
         Game game = GameMapper.mapToGame(gameDto);
 
+        //update one side
+        gameService.submitGame(gameDto);
+
         user.getGamesOwned().add(game);
 
         UserDto userDto = UserMapper.mapToUserDto(user);
 
+        //update other side
         UserDto userDtoSaved = userService.saveUser(userDto);
 
         User userSaved = UserMapper.mapToUser(userDtoSaved);
@@ -73,21 +78,23 @@ public class GameController {
         return "submitted-game-view";
     }
 
-    @PostMapping("join_game")
-    public String joinGame(@RequestParam String uniqueGameId, Model model) {
+    @PostMapping("/join_game")
+    @Transactional
+    public String joinGame(@RequestParam String gameId, Model model) {
 
         User user = userService.findUserByEmail(Utilities.getCurrentUser());
 
-        Game game = gameService.findGameByUniqueId(uniqueGameId);
+        Game game = gameService.findGameByUniqueId(gameId);
 
-        GameDto gameDto = GameMapper.mapToGameDto(game);
+        gameService.addPlayerToGame(user, game);
 
-        userService.joinGame(user, gameDto);
+        userService.joinGame(user, game);
 
-        gameService.addPlayerToGame(user, gameDto);
+        model.addAttribute("game", game);
 
-        model.addAttribute("game", gameDto);
+        model.addAttribute("user", user);
 
-        return "redirect:/submit-guess";
+        return "submitted-game-view";
     }
+
 }

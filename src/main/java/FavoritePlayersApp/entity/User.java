@@ -3,6 +3,7 @@ package FavoritePlayersApp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,13 +31,13 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner")
     private List<Game> gamesOwned;
 
     @ManyToMany
-    @JoinTable(name = "joined_game",
+    @JoinTable(name = "users_per_game",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "game_id"))
-    private List<Game> gamesJoined;
+    private List<Game> gamesJoined = new ArrayList<>();
 
 }

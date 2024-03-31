@@ -30,9 +30,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game addPlayerToGame(User user, GameDto gameDto) {
-
-        Game game = GameMapper.mapToGame(gameDto);
+    public Game addPlayerToGame(User user, Game game) {
 
         game.getPlayersJoined().add(user);
 

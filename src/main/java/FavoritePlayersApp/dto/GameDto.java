@@ -3,6 +3,7 @@ package FavoritePlayersApp.dto;
 import FavoritePlayersApp.entity.User;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,13 +13,13 @@ import java.util.List;
 @ToString
 public class GameDto {
 
-    int numberOfPlayersAllowed;
+    private int numberOfPlayersAllowed;
 
-    int attemptsAllowed;
+    private int attemptsAllowed;
 
-    String uniqueId;
+    private String uniqueId;
 
     private User owner;
 
-    private List<User> playersJoined;
+    private List<User> playersJoined = new ArrayList<>();
 }

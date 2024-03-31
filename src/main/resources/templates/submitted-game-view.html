@@ -40,7 +40,7 @@
                     <td th:text="${game.numberOfPlayersAllowed}">Value 2</td>
                     <td th:text="${game.attemptsAllowed}">Value 3</td>
                     <td>
-                        <form th:action="@{/join_game}" method="post" th:attr="data-game-id=${game.uniqueId}">
+                        <form th:action="@{/join_game(gameId=${game.uniqueId})}" method="post">
                             <button class="btn btn-primary">Join</button>
                         </form>
                     </td> <!-- Button added -->
@@ -76,7 +76,7 @@
                         <td th:text="${existing_game.numberOfPlayersAllowed}">Value 2</td>
                         <td th:text="${existing_game.attemptsAllowed}">Value 3</td>
                         <td>
-                            <form th:action="@{/join_game}" method="post" th:attr="data-game-id=${existing_game.uniqueId}">
+                            <form th:action="@{/join_game(gameId=${existing_game.uniqueId})}" method="post">
                                 <button class="btn btn-primary">Join</button>
                             </form>
                         </td> <!-- Button added -->
@@ -87,5 +87,6 @@
         </div>
     </div>
 </div>
+
 
 </html>
