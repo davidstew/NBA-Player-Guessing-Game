@@ -2,6 +2,7 @@ package FavoritePlayersApp.service.impl;
 
 import FavoritePlayersApp.dto.GameDto;
 import FavoritePlayersApp.entity.Game;
+import FavoritePlayersApp.entity.User;
 import FavoritePlayersApp.mapper.GameMapper;
 import FavoritePlayersApp.repository.GameRepository;
 import FavoritePlayersApp.service.GameService;
@@ -26,6 +27,25 @@ public class GameServiceImpl implements GameService {
         Game game = GameMapper.mapToGame(gameDto);
 
         return gameRepository.save(game);
+    }
+
+    @Override
+    public Game addPlayerToGame(User user, GameDto gameDto) {
+
+        Game game = GameMapper.mapToGame(gameDto);
+
+        game.getPlayersJoined().add(user);
+
+        return gameRepository.save(game);
+
+    }
+
+    @Override
+    public Game findGameByUniqueId(String uniqueGameId) {
+
+        System.out.println("LOOKNIG FOR ID: " + uniqueGameId);
+
+        return gameRepository.findGameByUniqueId(uniqueGameId);
     }
 
 }

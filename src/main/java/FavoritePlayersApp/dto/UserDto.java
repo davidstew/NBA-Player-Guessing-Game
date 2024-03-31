@@ -29,6 +29,8 @@ public class UserDto {
 
     private List<Game> gamesOwned;
 
+    private List<Game> gamesJoined;
+
     @NotEmpty(message = "Password should not be empty.")
     @Email
     private String email;

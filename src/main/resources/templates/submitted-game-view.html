@@ -37,10 +37,10 @@
                 <tbody>
                 <tr>
                     <td th:text="${game.uniqueId}">Value 1</td>
-                    <td th:text="${game.players}">Value 2</td>
+                    <td th:text="${game.numberOfPlayersAllowed}">Value 2</td>
                     <td th:text="${game.attemptsAllowed}">Value 3</td>
                     <td>
-                        <form th:action="@{/join_game/${game}}" method="post">
+                        <form th:action="@{/join_game}" method="post" th:attr="data-game-id=${game.uniqueId}">
                             <button class="btn btn-primary">Join</button>
                         </form>
                     </td> <!-- Button added -->
@@ -73,10 +73,10 @@
                 <tr th:each="existing_game : ${user.getGamesOwned()}">
                     <div th:if="${game.getUniqueId() != existing_game.getUniqueId()}">
                         <td th:text="${existing_game.uniqueId}">Value 1</td>
-                        <td th:text="${existing_game.players}">Value 2</td>
+                        <td th:text="${existing_game.numberOfPlayersAllowed}">Value 2</td>
                         <td th:text="${existing_game.attemptsAllowed}">Value 3</td>
                         <td>
-                            <form th:action="@{/join_game/${existing_game}}" method="post">
+                            <form th:action="@{/join_game}" method="post" th:attr="data-game-id=${existing_game.uniqueId}">
                                 <button class="btn btn-primary">Join</button>
                             </form>
                         </td> <!-- Button added -->

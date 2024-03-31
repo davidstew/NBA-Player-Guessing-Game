@@ -35,8 +35,8 @@ public class User {
 
     @ManyToMany
     @JoinTable(name = "joined_game",
-    joinColumns = @JoinColumn("user_id"),
-    inverseJoinColumns = @JoinColumn("game_id"))
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "game_id"))
     private List<Game> gamesJoined;
 
 }

@@ -13,9 +13,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import utilities.Utilities;
 
 import java.util.Random;
 
@@ -43,22 +42,17 @@ public class GameController {
 
     @GetMapping("/createGame")
     public String createGame(Model model) {
-        // Logic for creating a game
         return "/create-game";
     }
 
-//    @PostMapping("/joinGame")
-//    public String joinGame() {
-//        // Logic for joining a game
-//        return "redirect:/game-joined";
-//    }
 
     @PostMapping("/submitGame")
     public String submitGame(@ModelAttribute("game") GameDto gameDto, Model model) {
 
-        User user = userService.findUserByEmail(getCurrentUser());
+        System.out.println("@@@@@@@@@@@@@@@@@ 1");
+        User user = userService.findUserByEmail(Utilities.getCurrentUser());
 
-        gameDto.setUniqueId(generateRandomID());
+        gameDto.setUniqueId(Utilities.generateRandomID());
 
         gameDto.setOwner(user);
 
@@ -79,28 +73,21 @@ public class GameController {
         return "submitted-game-view";
     }
 
-    public static String getCurrentUser() {
+    @PostMapping("join_game")
+    public String joinGame(@RequestParam String uniqueGameId, Model model) {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(Utilities.getCurrentUser());
 
-        if (authentication != null && authentication.isAuthenticated()) {
-            return authentication.getName();
-        } else {
-            return "No user authenticated";
-        }
+        Game game = gameService.findGameByUniqueId(uniqueGameId);
+
+        GameDto gameDto = GameMapper.mapToGameDto(game);
+
+        userService.joinGame(user, gameDto);
+
+        gameService.addPlayerToGame(user, gameDto);
+
+        model.addAttribute("game", gameDto);
+
+        return "redirect:/submit-guess";
     }
-
-    public static String generateRandomID() {
-        // Create a Random object
-        Random random = new Random();
-
-        // Generate a random integer between 1000 and 9999 (inclusive)
-        int randomIDInt = random.nextInt(9000) + 1000;
-
-        // Convert the integer to a string
-        String randomID = Integer.toString(randomIDInt);
-
-        return randomID;
-    }
-
 }

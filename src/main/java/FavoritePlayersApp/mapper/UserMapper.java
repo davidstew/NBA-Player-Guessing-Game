@@ -13,6 +13,7 @@ public class UserMapper {
         user.setPassword(userDto.getPassword());
         user.setEmail(userDto.getEmail());
         user.setGamesOwned(userDto.getGamesOwned());
+        user.setGamesJoined(userDto.getGamesJoined());
 
         return user;
     }
@@ -25,8 +26,7 @@ public class UserMapper {
         userDto.setEmail(user.getEmail());
         userDto.setPassword(user.getPassword());
         userDto.setGamesOwned(user.getGamesOwned());
-
-        System.out.println(userDto);
+        userDto.setGamesJoined(user.getGamesJoined());
 
         return userDto;
     }
