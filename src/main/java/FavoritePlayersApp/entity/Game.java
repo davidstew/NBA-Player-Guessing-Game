@@ -18,7 +18,7 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    int players;
+    int numberOfPlayersAllowed;
 
     int attemptsAllowed;
 
@@ -27,4 +27,8 @@ public class Game {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+
+    @ManyToMany(mappedBy = "gamesJoined")
+    private List<User> playersJoined;
+
 }

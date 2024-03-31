@@ -33,4 +33,10 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Game> gamesOwned;
 
+    @ManyToMany
+    @JoinTable(name = "joined_game",
+    joinColumns = @JoinColumn("user_id"),
+    inverseJoinColumns = @JoinColumn("game_id"))
+    private List<Game> gamesJoined;
+
 }
