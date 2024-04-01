@@ -52,11 +52,11 @@ public class GameController {
 
         User user = userService.findUserByEmail(Utilities.getCurrentUser());
 
-        //update one side
+        // update owning side of many-to-one relationship, default cascade.ALL behavior saves the other side
         Game submittedGame = gameService.submitGame(user, gameDto);
 
-        //update other side
-        userService.saveUsersOwnedGame(user, submittedGame);
+        // updating the other side is optional.
+        //userService.saveUsersOwnedGame(user, submittedGame);
 
         model.addAttribute("game", submittedGame);
 
@@ -73,11 +73,11 @@ public class GameController {
 
         Game game = gameService.findGameByUniqueId(gameId);
 
-        // save one side
-        gameService.addPlayerToGame(user, game);
-
-        //save other side
+        // update owning side of many-to-many relationship, default cascade.ALL behavior saves the other side
         userService.joinGame(user, game);
+
+        // optional since owning side persistence cascades to update the inverse side
+        //gameService.addPlayerToGame(user, game);
 
         model.addAttribute("game", game);
 

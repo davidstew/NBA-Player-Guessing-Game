@@ -36,7 +36,7 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private Set<Game> gamesOwned = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_per_game",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "game_id"))
