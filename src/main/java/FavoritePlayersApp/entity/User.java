@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -32,12 +34,12 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "owner")
-    private List<Game> gamesOwned;
+    private Set<Game> gamesOwned = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "users_per_game",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "game_id"))
-    private List<Game> gamesJoined = new ArrayList<>();
+    private Set<Game> gamesJoined = new HashSet<>();
 
 }

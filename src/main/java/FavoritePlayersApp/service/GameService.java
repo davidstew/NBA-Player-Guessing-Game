@@ -5,7 +5,7 @@ import FavoritePlayersApp.entity.Game;
 import FavoritePlayersApp.entity.User;
 
 public interface GameService {
-    Game submitGame(GameDto gameDto);
+    Game submitGame(User user, GameDto gameDto);
 
     Game addPlayerToGame(User user, Game gameDto);
 

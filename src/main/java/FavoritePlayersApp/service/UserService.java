@@ -8,6 +8,8 @@ import FavoritePlayersApp.entity.User;
 public interface UserService {
     User findUserByEmail(String email);
 
+    UserDto saveUsersOwnedGame(User user, Game game);
+
     UserDto saveUser(UserDto user);
 
     UserDto joinGame(User user, Game game);

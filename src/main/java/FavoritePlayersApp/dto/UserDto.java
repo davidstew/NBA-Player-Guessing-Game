@@ -1,8 +1,6 @@
 package FavoritePlayersApp.dto;
 
 import FavoritePlayersApp.entity.Game;
-import jakarta.persistence.Entity;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -10,8 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,9 +26,9 @@ public class UserDto {
     @NotEmpty(message = "Email should not be empty.")
     private String password;
 
-    private List<Game> gamesOwned = new ArrayList<>();
+    private Set<Game> gamesOwned = new HashSet<>();
 
-    private List<Game> gamesJoined = new ArrayList<>();
+    private Set<Game> gamesJoined = new HashSet<>();
 
     @NotEmpty(message = "Password should not be empty.")
     @Email
