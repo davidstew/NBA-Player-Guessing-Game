@@ -46,34 +46,21 @@ public class GameController {
         return "/create-game";
     }
 
-
     @PostMapping("/submitGame")
     @Transactional
     public String submitGame(@ModelAttribute("game") GameDto gameDto, Model model) {
 
         User user = userService.findUserByEmail(Utilities.getCurrentUser());
 
-        gameDto.setUniqueId(Utilities.generateRandomID());
-
-        gameDto.setOwner(user);
-
-        Game game = GameMapper.mapToGame(gameDto);
-
         //update one side
-        gameService.submitGame(gameDto);
-
-        user.getGamesOwned().add(game);
-
-        UserDto userDto = UserMapper.mapToUserDto(user);
+        Game submittedGame = gameService.submitGame(user, gameDto);
 
         //update other side
-        UserDto userDtoSaved = userService.saveUser(userDto);
+        userService.saveUsersOwnedGame(user, submittedGame);
 
-        User userSaved = UserMapper.mapToUser(userDtoSaved);
+        model.addAttribute("game", submittedGame);
 
-        model.addAttribute("game", game);
-
-        model.addAttribute("user", userSaved);
+        model.addAttribute("user", user);
 
         return "submitted-game-view";
     }
@@ -86,8 +73,10 @@ public class GameController {
 
         Game game = gameService.findGameByUniqueId(gameId);
 
+        // save one side
         gameService.addPlayerToGame(user, game);
 
+        //save other side
         userService.joinGame(user, game);
 
         model.addAttribute("game", game);

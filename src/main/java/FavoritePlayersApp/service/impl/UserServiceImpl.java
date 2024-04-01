@@ -35,17 +35,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
-    @Override
     public UserDto saveUser(UserDto userDto) {
 
-        User user = findUserByEmail(userDto.getEmail());
+      User  user = UserMapper.mapToUser(userDto);
 
-        if (user == null) {
+      user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-            user = UserMapper.mapToUser(userDto);
+      User savedUser = userRepository.save(user);
 
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
+      return UserMapper.mapToUserDto(savedUser);
+
+    }
+
+    @Override
+    public UserDto saveUsersOwnedGame(User user, Game game) {
+
+        user.getGamesOwned().add(game);
 
         User savedUser = userRepository.save(user);
 

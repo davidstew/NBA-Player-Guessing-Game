@@ -8,6 +8,7 @@ import FavoritePlayersApp.repository.GameRepository;
 import FavoritePlayersApp.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import utilities.Utilities;
 
 import java.util.Random;
 
@@ -22,7 +23,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game submitGame(GameDto gameDto) {
+    public Game submitGame(User user, GameDto gameDto) {
+
+        gameDto.setUniqueId(Utilities.generateRandomID());
+
+        gameDto.setOwner(user);
 
         Game game = GameMapper.mapToGame(gameDto);
 

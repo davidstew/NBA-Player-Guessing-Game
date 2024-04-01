@@ -4,7 +4,9 @@ import FavoritePlayersApp.entity.User;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -21,5 +23,5 @@ public class GameDto {
 
     private User owner;
 
-    private List<User> playersJoined = new ArrayList<>();
+    private Set<User> playersJoined = new HashSet<>();
 }
