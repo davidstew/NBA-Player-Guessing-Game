@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Round 1 of 5</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">Round 1 of 5</h1>
+    <table class="table table-striped table-bordered text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th th>Player</th>
+            <th>Guess</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="rowNum: ${#numbers.sequence(0, game.getNumberOfPlayersAllowed() - 1)}">
+            <div>
+                <td th:text="${rowNum < players.size() ? players.get(rowNum).getFirstName() + ' ' + players.get(rowNum).getLastName() : 'WAITING FOR PLAYER TO JOIN'}"></td>
+                <td th:if="${rowNum < players.size() && players.get(rowNum) == user}">
+                    <form method="post">
+                        <button class="btn btn-primary">Guess</button>
+                    </form>
+                </td>
+                 <td th:unless="${rowNum < players.size() && players.get(rowNum) == user}">
+                    <p>WAITING FOR GUESS</p>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
