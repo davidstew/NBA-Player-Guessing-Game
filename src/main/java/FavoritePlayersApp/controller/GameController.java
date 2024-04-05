@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import utilities.Utilities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -77,13 +79,17 @@ public class GameController {
         userService.joinGame(user, game);
 
         // optional since owning side persistence cascades to update the inverse side
-        //gameService.addPlayerToGame(user, game);
+        gameService.addPlayerToGame(user, game);
 
         model.addAttribute("game", game);
 
         model.addAttribute("user", user);
 
-        return "submitted-game-view";
+        List<User> playersJoinedList = new ArrayList<>(game.getPlayersJoined());
+
+        model.addAttribute("players", playersJoinedList);
+
+        return "join_game";
     }
 
 }
