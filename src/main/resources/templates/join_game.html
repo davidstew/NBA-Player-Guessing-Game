@@ -1,81 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Round 1 of 5</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f4f4f4;
-            padding-top: 50px; /* Added padding to move content down */
-        }
-        .container {
-            margin: auto;
-            max-width: 800px; /* Limited container width for better readability */
-            padding: 20px;
-            background-color: #fff; /* Added white background for content */
-            border-radius: 10px; /* Added border radius for container */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added shadow for container */
-        }
-        .table {
-            margin-top: 20px; /* Added margin to separate table from heading */
-        }
-    </style>
 </head>
 <body>
-
 <div class="container">
-    <h1 class="text-center mb-4">Round 1 of 5</h1> <!-- Added margin-bottom for heading -->
+    <h1 class="text-center">Round 1 of 5</h1>
     <table class="table table-striped table-bordered text-center">
         <thead class="thead-dark">
         <tr>
-            <th>Player</th>
+            <th th>Player</th>
             <th>Guess</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Loop through players -->
         <tr th:each="rowNum: ${#numbers.sequence(0, game.getNumberOfPlayersAllowed() - 1)}">
-            <td>
-                <!-- Display player name -->
-                <span th:text="${rowNum < players.size() ? players.get(rowNum).getFirstName() + ' ' + players.get(rowNum).getLastName() : 'WAITING FOR PLAYER TO JOIN'}"></span>
-            </td>
+            <div>
+                <td th:text="${rowNum < players.size() ? players.get(rowNum).getFirstName() + ' ' + players.get(rowNum).getLastName() : 'WAITING FOR PLAYER TO JOIN'}"></td>
 
-            <td th:if="${rowNum < players.size() && players.get(rowNum) == user}">
-                <!-- Form for guessing -->
-                <form id="playerForm" action="/submitPlayer" method="post">
-                    <div class="form-group">
-                        <label for="playerDropdown">Select Player:</label>
-                        <select id="playerDropdown" class="form-control" name="selectedPlayerId">
-                            <!-- Dropdown options will be populated dynamically -->
-                        </select>
+                <td th:if="${rowNum < players.size() && players.get(rowNum) == user}">
+
+                    <div class="container">
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-md-8">
+                                <form id="playerForm" action="/submitPlayer" method="post">
+                                    <div class="form-group">
+                                        <label for="playerDropdown">Select Player:</label>
+                                        <select id="playerDropdown" class="form-control" name="selectedPlayerId">
+                                            <!-- Dropdown options will be populated dynamically -->
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit Player</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit Player</button>
-                </form>
-            </td>
 
-            <td th:unless="${rowNum < players.size() && players.get(rowNum) == user}">
-                <!-- Display waiting message -->
-                <p>WAITING FOR GUESS</p>
-            </td>
+                    <!-- Bootstrap JS -->
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <!-- Select2 JS -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+                    <!-- Axios CDN -->
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                    <!-- Your JavaScript file -->
+                    <script src="NBA_PLAYERS_SELECTION_MENU.js"></script>
+
+                </td>
+                <td th:unless="${rowNum < players.size() && players.get(rowNum) == user}">
+                    <p>WAITING FOR GUESS</p>
+                </td>
+            </div>
         </tr>
-        <!-- End loop -->
         </tbody>
     </table>
 </div>
-
-<!-- Bootstrap JS -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<!-- Select2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<!-- Axios CDN -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Your JavaScript file -->
-<script src="test.js"></script>
 
 </body>
 </html>

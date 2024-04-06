@@ -1,8 +1,11 @@
-const apiUrl = 'https://api-nba-v1.p.rapidapi.com/players?team=1&season=2021';
+const apiUrl = 'https://api-nba-v1.p.rapidapi.com/players';
 const apiKey = '84821ec6bamshe0441b30627243ap1267aejsn1bcce07576ce';
 
 // Make the GET request using Axios
 axios.get(apiUrl, {
+    params: {
+        country : 'usa'
+    },
     headers: {
         'x-rapidapi-key': apiKey,
         'x-rapidapi-host': 'api-nba-v1.p.rapidapi.com'
