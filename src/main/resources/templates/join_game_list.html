@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Buttons</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="mb-3">
+                <h2 class="text-center">Here are all the gamres you can join!</h2>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Game ID</th>
+                    <th>Number of Players Allowed</th>
+                    <th>Number of Attempts Allowed</th>
+                    <th></th> <!-- Added an empty header for the button -->
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="game : ${games}">
+                        <td th:text="${game.uniqueId}">Value 1</td>
+                        <td th:text="${game.numberOfPlayersAllowed}">Value 2</td>
+                        <td th:text="${game.attemptsAllowed}">Value 3</td>
+                        <td>
+                            <form th:action="@{/join_game(gameId=${game.uniqueId})}" method="post">
+                                <button class="btn btn-primary">Join</button>
+                            </form>
+                        </td> <!-- Button added -->
+                    </div>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </body>
+</html>

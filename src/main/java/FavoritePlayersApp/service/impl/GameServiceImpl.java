@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import utilities.Utilities;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -49,6 +50,11 @@ public class GameServiceImpl implements GameService {
         System.out.println("LOOKNIG FOR ID: " + uniqueGameId);
 
         return gameRepository.findGameByUniqueId(uniqueGameId);
+    }
+
+    @Override
+    public List<Game> getAllGames() {
+        return gameRepository.findAll();
     }
 
 }
