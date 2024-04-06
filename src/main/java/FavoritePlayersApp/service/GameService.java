@@ -14,4 +14,6 @@ public interface GameService {
     Game findGameByUniqueId(String uniqueGameId);
 
     List<Game> getAllGames();
+
+    List<Game> getAllGamesJoinedByCurrentUser(User user);
 }

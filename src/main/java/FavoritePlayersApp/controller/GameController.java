@@ -48,16 +48,25 @@ public class GameController {
         return "/create-game";
     }
 
-    @GetMapping("/join_game")
-    public String joinGame(Model model) {
+    @GetMapping("/view_games_joined")
+    public String viewGamesJoined(Model model) {
 
         User user = userService.findUserByEmail(Utilities.getCurrentUser());
+
+        List<Game> gamesJoined = gameService.getAllGamesJoinedByCurrentUser(user);
+
+        model.addAttribute("games", gamesJoined);
+
+        return "view_game_list";
+
+    }
+
+    @GetMapping("/join_game")
+    public String joinGame(Model model) {
 
         List<Game> allGames = gameService.getAllGames();
 
         model.addAttribute("games", allGames);
-
-        model.addAttribute("user", user);
 
         return "join_game_list";
     }
