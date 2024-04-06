@@ -48,6 +48,20 @@ public class GameController {
         return "/create-game";
     }
 
+    @GetMapping("/join_game")
+    public String joinGame(Model model) {
+
+        User user = userService.findUserByEmail(Utilities.getCurrentUser());
+
+        List<Game> allGames = gameService.getAllGames();
+
+        model.addAttribute("games", allGames);
+
+        model.addAttribute("user", user);
+
+        return "join_game_list";
+    }
+
     @PostMapping("/submitGame")
     @Transactional
     public String submitGame(@ModelAttribute("game") GameDto gameDto, Model model) {
