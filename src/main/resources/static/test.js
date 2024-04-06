@@ -32,9 +32,10 @@ function populateDropdown(players) {
     });
 
     // Event listener for dropdown change
-    dropdown.on('change', function() {
+    dropdown.on('change', function () {
         const selectedPlayerId = $(this).val();
         const selectedPlayerName = $(this).find(':selected').text();
         console.log('Selected player:', selectedPlayerId, selectedPlayerName);
     });
 }
+
