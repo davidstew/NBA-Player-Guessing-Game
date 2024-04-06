@@ -4,7 +4,8 @@ const apiKey = '84821ec6bamshe0441b30627243ap1267aejsn1bcce07576ce';
 // Make the GET request using Axios
 axios.get(apiUrl, {
     params: {
-        country : 'usa'
+        team : '11',
+        season: '2023'
     },
     headers: {
         'x-rapidapi-key': apiKey,
@@ -25,7 +26,8 @@ axios.get(apiUrl, {
 function populateDropdown(players) {
     const dropdown = $('#playerDropdown');
     players.forEach(player => {
-        dropdown.append($('<option></option>').text(`${player.firstname} ${player.lastname}`).val(player.id));
+        dropdown.append($('<option></option>').text(`${player.firstname} ${player.lastname}`).val(`${player.firstname} ${player.lastname}`));
+        // dropdown.append($('<option></option>').text(`${player.firstname} ${player.lastname}`).val(player.id));
     });
 
     // Initialize Select2

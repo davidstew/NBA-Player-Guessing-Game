@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import utilities.Utilities;
 
 import java.util.ArrayList;
@@ -113,6 +114,41 @@ public class GameController {
         model.addAttribute("players", playersJoinedList);
 
         return "join_game";
+    }
+
+    @GetMapping("/join_game_refresh")
+    @Transactional
+    public String joinGameRefresh(@RequestParam String gameId, Model model) {
+
+        User user = userService.findUserByEmail(Utilities.getCurrentUser());
+
+        Game game = gameService.findGameByUniqueId(gameId);
+
+        // update owning side of many-to-many relationship, default cascade.ALL behavior saves the other side
+        userService.joinGame(user, game);
+
+        // optional since owning side persistence cascades to update the inverse side
+        gameService.addPlayerToGame(user, game);
+
+        model.addAttribute("game", game);
+
+        model.addAttribute("user", user);
+
+        List<User> playersJoinedList = new ArrayList<>(game.getPlayersJoined());
+
+        model.addAttribute("players", playersJoinedList);
+
+        return "join_game";
+    }
+
+    @PostMapping("/submitPlayer/{id}")
+    public String submitPlayer(@RequestParam("selectedPlayerId") String player, @PathVariable("id") int id, RedirectAttributes redirectAttributes) {
+
+        System.out.println("player is " + player);
+
+        redirectAttributes.addAttribute("gameId", id);
+
+        return "redirect:/join_game_refresh";
     }
 
 }
