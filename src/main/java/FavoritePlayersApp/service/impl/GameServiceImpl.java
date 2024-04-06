@@ -12,6 +12,7 @@ import utilities.Utilities;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class GameServiceImpl implements GameService {
@@ -47,8 +48,6 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game findGameByUniqueId(String uniqueGameId) {
 
-        System.out.println("LOOKNIG FOR ID: " + uniqueGameId);
-
         return gameRepository.findGameByUniqueId(uniqueGameId);
     }
 
@@ -57,4 +56,11 @@ public class GameServiceImpl implements GameService {
         return gameRepository.findAll();
     }
 
+    @Override
+    public List<Game> getAllGamesJoinedByCurrentUser(User user) {
+
+       List<Game> games = gameRepository.findAll();
+
+       return games.stream().filter((game) -> game.getPlayersJoined().contains(user)).collect(Collectors.toList());
+    }
 }
